@@ -1,22 +1,15 @@
 # FTOT 
-
 Freight and Fuel Transportation Optimization Tool 
 
-This is a fork from [`FTOT-Public`](https://github.com/VolpeUSDOT/FTOT-Public), modified for **Link Removal Resiliency Testing** Use case. Please see [`FTOT-Public`](https://github.com/VolpeUSDOT/FTOT-Public) for current release version of the FTOT tool.
-
-Please see the `usecase/link_removal` directory in this modified version for instructions on this use case, and description of the modified code. 
-
 ## Description:
-
-FTOT is a flexible scenario-testing tool that optimizes the transportation of materials for future energy and freight
-scenarios.  FTOT models and tracks commodity-specific information and can take into account conversion  of raw materials to products (e.g., crude oil to jet fuel and diesel) and the fulfillment of downstream demand. FTOT was developed at the US Dept. of Transportation's Volpe National Transportation Systems Center.
+FTOT is a flexible scenario-testing tool that optimizes the transportation of materials for future energy and freight scenarios. FTOT models and tracks commodity-specific information and can take into account conversion of raw materials to products (e.g., crude oil to jet fuel and diesel) and the fulfillment of downstream demand. FTOT was developed at the US Dept. of Transportation's Volpe National Transportation Systems Center.
 
 ## Installation: 
-See [FTOT Installation wiki](https://github.com/VolpeUSDOT/FTOT-Public/wiki/FTOT-Installation-Guide) for the detailed instructions. 
-* FTOT is a python based tool. 
+See [FTOT Installation wiki](https://github.com/VolpeUSDOT/FTOT-Public/wiki/FTOT-Installation-Guide) for the latest detailed instructions. If you need to run a legacy copy of FTOT compatible with ArcGIS rather than ArcGIS Pro, consult these [separate legacy instructions](https://github.com/VolpeUSDOT/FTOT-Public/wiki/FTOT-Installation-Guide-(ArcGIS-Legacy)) 
+* FTOT is a Python based tool.
 * Clone or download the repository.
-* Install the required dependencies (including ESRI ArcGIS)
-* Download the [documentation and scenario dataset](https://github.com/VolpeUSDOT/FTOT-Public/wiki/Documentation-and-Scenario-Datasets)
+* Install the required dependencies (including ESRI ArcGIS Pro).
+* Download the [documentation and scenario dataset](https://github.com/VolpeUSDOT/FTOT-Public/wiki/Documentation-and-Scenario-Datasets).
 
 ## Usage:
 * Usage is explained in the Quick Start documentation here: [Documentation and Scenario Dataset Wiki](https://github.com/VolpeUSDOT/FTOT-Public/wiki/Documentation-and-Scenario-Datasets)
@@ -36,7 +29,7 @@ See [FTOT Installation wiki](https://github.com/VolpeUSDOT/FTOT-Public/wiki/FTOT
 * Kirby Ledvina (Volpe)
 * Kevin Zhang (Volpe)
 * Michelle Gilmore (Volpe) 
-* Mark Mockett (iBiz)
+* Mark Mockett (Volpe)
 
 ## Project Sponsors:
 The development of FTOT that contributed to this public version was funded by the U.S. Federal Aviation Administration (FAA) Office of Environment and Energy and the Department of Defense (DOD) Office of Naval Research through Interagency Agreements (IAA) FA4SCJ and FB48CS under the supervision of FAA’s Nathan Brown and by the U.S. Department of Energy (DOE) Office of Policy under IAA VXS3A2 under the supervision of Zachary Clement. Any opinions, findings, conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the FAA nor of DOE.

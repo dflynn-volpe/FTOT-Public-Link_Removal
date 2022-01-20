@@ -20,13 +20,15 @@ ureg = UnitRegistry()
 Q_ = ureg.Quantity
 ureg.define('usd = [currency]')  # add the US Dollar, "USD" to the unit registry
 # solves issue in pint 0.9
-if float(pint.__version__) < 1:
+if pint.__version__ == 0.9:
     ureg.define('short_hundredweight = short_hunderdweight')
     ureg.define('long_hundredweight = long_hunderdweight')
     ureg.define('us_ton = US_ton')
 
-VERSION_NUMBER = "5.0.6"
-VERSION_DATE = "09/30/2020"
+
+FTOT_VERSION = "2021.4"
+SCHEMA_VERSION = "6.0.1"
+VERSION_DATE = "1/10/2022"
 
 # ===================================================================================================
 
@@ -38,7 +40,7 @@ if __name__ == '__main__':
     # ----------------------------------------------------------------------------------------------
 
     program_description = 'Freight/Fuels Transportation Optimization Tool (FTOT). Version Number: ' \
-                          + VERSION_NUMBER + ", (" + VERSION_DATE + ")"
+                          + FTOT_VERSION + ", (" + VERSION_DATE + ")"
 
     help_text = """
     The command-line input expected for this script is as follows:
@@ -54,7 +56,8 @@ if __name__ == '__main__':
             f  = facilities; process GIS feature classes and commodity input CSV files
             c  = connectivity; connects facilities to the network using artificial links and exports geodatabase FCs as 
             shapefiles
-            g  = graph; reads in shapefiles using networkX and prepares, cleans, and stores the network digraph in the database
+            g  = graph; reads in shapefiles using networkX and prepares, cleans, and stores the network digraph in the
+            database
             
             # optimization options
             # --------------------
@@ -87,9 +90,11 @@ if __name__ == '__main__':
             m  = create map documents with simple basemap
             mb = optionally create map documents with a light gray basemap
             mc = optionally create map documents with a topographic basemap
+            md = optionally create map documents with a streets basemap
             m2 = time and commodity mapping with simple basemap
             m2b = optionally create time and commodity mapping with a light gray basemap
             m2c = optionally create time and commodity mapping with a topographic basemap
+            m2d = optionally create time and commodity mapping with a streets basemap
             
             # utilities, tools, and advanced options
             # ---------------------------------------
@@ -104,7 +109,7 @@ if __name__ == '__main__':
     parser.add_argument("task", choices=("s", "f", "f2", "c", "c2", "g", "g2",
                                          "o", "oc",
                                          "o1", "o2", "o2b", "oc1", "oc2", "oc2b", "oc3", "os", "p",
-                                         "d", "m", "mb", "mc", "m2", "m2b", "m2c",
+                                         "d", "m", "mb", "mc", "md", "m2", "m2b", "m2c", "m2d"
                                          "test"
                                          ), type=str)
     parser.add_argument('-skip_arcpy_check', action='store_true',
@@ -123,7 +128,7 @@ if __name__ == '__main__':
     if os.path.exists(args.config_file):
         ftot_program_directory = os.path.dirname(os.path.realpath(__file__))
     else:
-        print "{} doesn't exist".format(args.config_file)
+        print ("{} doesn't exist".format(args.config_file))
         sys.exit()
 
     # set up logging and report run start time
@@ -165,14 +170,13 @@ if __name__ == '__main__':
     if not args.skip_arcpy_check:
         try:
             import arcpy
-            arcmap_version = arcpy.GetInstallInfo()['Version']
-            if not arcmap_version in ['10.1', '10.2', '10.2.1', '10.2.2', '10.3', '10.3.1', '10.4', '10.4.1',
-                                      '10.5', '10.5.1', '10.6', '10.6.1', '10.7', '10.7.1', '10.8', '10.8.1']:
-                logger.error("Version {} of ArcGIS is not currently supported. Exiting.".format(arcmap_version))
+            arcgis_pro_version = arcpy.GetInstallInfo()['Version']
+            if float(arcgis_pro_version[0:3]) < 2.6:
+                logger.error("Version {} of ArcGIS Pro is not supported. Exiting.".format(arcgis_pro_version))
                 sys.exit()
 
         except RuntimeError:
-            logger.error("You will need ArcGIS 10.1 or later to run this script. If you do have ArcGIS installed, "
+            logger.error("ArcGIS Pro 2.6 or later is required to run this script. If you do have ArcGIS Pro installed, "
                          "confirm that it is properly licensed and/or that the license manager is accessible. Exiting.")
             sys.exit()
 
@@ -237,7 +241,7 @@ if __name__ == '__main__':
         # optional step to solve and save pulp problem from pickle
         elif args.task == 'o2b':
             from ftot_pulp import o2b
-            o2b(the_scenario,logger)
+            o2b(the_scenario, logger)
 
         # optimization option - processor candidates generation
         elif args.task == 'oc1':
@@ -274,17 +278,19 @@ if __name__ == '__main__':
             generate_reports(the_scenario, logger)
 
         # currently m step has three basemap alternatives-- see key above
-        elif args.task in ["m", "mb", "mc"]:
+        elif args.task in ["m", "mb", "mc", "md"]:
             from ftot_maps import new_map_creation
             new_map_creation(the_scenario, logger, args.task)
 
         # currently m2 step has three basemap alternatives-- see key above
-        elif args.task in ["m2", "m2b", "m2c"]:
+        elif args.task in ["m2", "m2b", "m2c", "m2d"]:
             from ftot_maps import prepare_time_commodity_subsets_for_mapping
             prepare_time_commodity_subsets_for_mapping(the_scenario, logger, args.task)
 
         elif args.task == "test":
             logger.info("in the test case")
+            import pdb
+            pdb.set_trace()
 
     except:
 

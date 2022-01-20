@@ -16,6 +16,7 @@ import datetime
 import ntpath
 import glob
 from shutil import copy, rmtree
+from six.moves import input
 
 # ==============================================================================
 
@@ -64,7 +65,7 @@ def scenario_compare_prep():
     for a_dir in scenario_dirs:
         print("processing: {}".format(a_dir))
         report_dirs = glob.glob(os.path.join(a_dir, "reports", \
-            "tableau_report_*_*_*_*-*-*"))
+            "reports_*_*_*_*-*-*"))
 
         # skip empty scenarios without report folders
         if len(report_dirs) == 0:
@@ -81,7 +82,7 @@ def scenario_compare_prep():
             # inspect the reports folder
             path_to, the_file_name = ntpath.split(report)
 
-            the_date = datetime.datetime.strptime(the_file_name[14:], "_%Y_%m_%d_%H-%M-%S")
+            the_date = datetime.datetime.strptime(the_file_name[7:], "_%Y_%m_%d_%H-%M-%S")
 
             report_dir_dict.append((the_file_name, the_date))
 
@@ -192,14 +193,14 @@ def get_input_dirs():
     print("-------------------------------")
     print("Option 1: recursive directory search ")
     print("Option 2: user-specified directories ")
-    user_choice = raw_input('Enter 1 or 2 or quit: >> ')
+    user_choice = input('Enter 1 or 2 or quit: >> ')
     if int(user_choice) == 1:
         return get_immediate_subdirectories()
     elif int(user_choice) == 2:
         return get_user_specified_directories()
     else:
         print("WARNING: not a valid choice! please press enter to continue.")
-        raw_input("press any key to quit")
+        input("press any key to quit")
 
 
 # ==============================================================================
@@ -208,7 +209,7 @@ def get_input_dirs():
 def get_immediate_subdirectories():
     top_dir = ""
     print("enter top level directory")
-    top_dir = raw_input('----------------------> ')
+    top_dir = input('----------------------> ')
     return [os.path.join(top_dir, name) for name in os.listdir(top_dir)
             if os.path.isdir(os.path.join(top_dir, name))]
 
@@ -226,7 +227,7 @@ def get_user_specified_directories():
         print("Type 'done' if you have entered all of your scenarios")
         a_scenario = ""
         while not os.path.exists(a_scenario):
-            a_scenario = raw_input('----------------------> ')
+            a_scenario = input('----------------------> ')
             print("USER INPUT: the scenario path: {}".format(a_scenario))
             if a_scenario.lower() == 'done':
                 if scenario_counter < 2:
@@ -252,7 +253,7 @@ def get_output_dir():
     print("-------------------------------")
     print("scenario comparison output directory: ")
     scenario_output = ""
-    scenario_output = raw_input('----------------------> ')
+    scenario_output = input('----------------------> ')
     print("USER INPUT: the scenario output path: {}".format(scenario_output))
     if not os.path.exists(scenario_output):
         os.makedirs(scenario_output)
