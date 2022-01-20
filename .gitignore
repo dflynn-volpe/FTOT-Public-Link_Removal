@@ -12,3 +12,7 @@ Reports/
 *.gdb
 Maps_Time_Commodity/
 python3_env/
+*.pickle
+*.RData
+*.jpeg
+*.jpg
