@@ -1150,7 +1150,8 @@ def minimum_bounding_geometry(the_scenario, logger):
         arcpy.SelectLayerByAttribute_management("road_lyr", "SWITCH_SELECTION")
 
         # Add in FC 1 roadways (going to keep all interstate highways)
-        arcpy.SelectLayerByAttribute_management("road_lyr", "REMOVE_FROM_SELECTION", "FCLASS = 1")
+        # For Network Resilience work, do not add back these roadways
+        # arcpy.SelectLayerByAttribute_management("road_lyr", "REMOVE_FROM_SELECTION", "FCLASS = 1")
 
         # Delete the features outside the buffer
         with arcpy.da.UpdateCursor('road_lyr', ['OBJECTID']) as ucursor:
@@ -1168,4 +1169,3 @@ def minimum_bounding_geometry(the_scenario, logger):
     # finally, compact the geodatabase so the MBG has an effect on runtime.
     arcpy.Compact_management(the_scenario.main_gdb)
     logger.debug("finish: minimum_bounding_geometry")
-

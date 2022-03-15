@@ -54,10 +54,10 @@ def graph(the_scenario, logger):
 
 def delete_shape_files(the_scenario, logger):
     # delete temporary files
-    logger.debug("start: delete the temp_networkx_shp_files dir")
-    input_path = the_scenario.networkx_files_dir
-    rmtree(input_path)
-    logger.debug("finish: delete the temp_networkx_shp_files dir")
+    # logger.debug("start: delete the temp_networkx_shp_files dir")
+    # input_path = the_scenario.networkx_files_dir
+    # rmtree(input_path)
+    # logger.debug("finish: delete the temp_networkx_shp_files dir")
 
 
 # -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ def presolve_network(the_scenario, G, logger):
         db_cur.execute(sql)
 
         sql = """
-            create table if not exists shortest_edges (from_node_id INT, to_node_id INT, edge_id INT, 
+            create table if not exists shortest_edges (from_node_id INT, to_node_id INT, edge_id INT,
             CONSTRAINT unique_from_to_edge_id_tuple UNIQUE (from_node_id, to_node_id, edge_id));
             """
         db_cur.execute(sql)
@@ -529,7 +529,7 @@ def make_od_pairs(the_scenario, logger):
         db_cur.execute(sql)
 
         sql = '''
-        insert into od_pairs (from_location_id, to_location_id, from_facility_id, to_facility_id, commodity_id, 
+        insert into od_pairs (from_location_id, to_location_id, from_facility_id, to_facility_id, commodity_id,
         phase_of_matter, from_node_id, to_node_id, from_location_1, to_location_1)
         select distinct
         origin.location_id AS from_location_id,
@@ -1253,4 +1253,3 @@ def edges_from_line(geom, attrs, simplify=True, geom_attrs=True):
             geom_i = geom.GetGeometryRef(i)
             for edge in edges_from_line(geom_i, attrs, simplify, geom_attrs):
                 yield edge
-

@@ -28,6 +28,8 @@ jupyter notebook
 
 ## Modify FTOT code
 
+[Download and install FTOT](https://github.com/VolpeUSDOT/FTOT-Public/wiki/FTOT-Installation-Guide) if you haven't already done so, and install the documentation and scenarios.
+
 Two files in the FTOT code need to be modified for this use case. They are as follows:
 
 - `ftot_networkx.py`
@@ -41,8 +43,8 @@ Copy these files from the location of this file to the location of your FTOT ins
 ## Run quick start scenario
 
 Run quick start 7 now, using the modified FTOT code.
-Browse to `C:\FTOT\scenarios\quick_start\qs7_rmp_proc_dest_multi_inputs` and double-click `run_v5_1.bat`.
+Browse to `C:\FTOT\scenarios\quick_start\qs7_rmp_proc_dest_multi_inputs\Default` and double-click `run_v6_1.bat`.
 
 ## Conduct link removal disruptions
 
-Browse to `Conduct_Link_Removal.ipynb` to begin this module.
+From the Jupyter Notebook window, browse to `Conduct_Link_Removal.ipynb` to begin this module.
