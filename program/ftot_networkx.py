@@ -58,6 +58,7 @@ def delete_shape_files(the_scenario, logger):
     # input_path = the_scenario.networkx_files_dir
     # rmtree(input_path)
     # logger.debug("finish: delete the temp_networkx_shp_files dir")
+    return 
 
 
 # -----------------------------------------------------------------------------
